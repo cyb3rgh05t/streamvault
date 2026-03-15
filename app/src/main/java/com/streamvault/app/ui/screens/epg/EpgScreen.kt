@@ -394,7 +394,7 @@ fun FullEpgScreen(
                                             overflow = TextOverflow.Ellipsis
                                         )
                                         Text(
-                                            text = "${format.format(Date(scheduleProgram.startTime))} - ${format.format(Date(scheduleProgram.endTime))}",
+                                            text = stringResource(R.string.time_range_format, format.format(Date(scheduleProgram.startTime)), format.format(Date(scheduleProgram.endTime))),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = OnSurfaceDim
                                         )
@@ -1359,7 +1359,7 @@ fun EpgRow(
                         )
                     }
                     Text(
-                        text = "${channel.number}. ${channel.name}",
+                        text = stringResource(R.string.channel_number_name_format, channel.number, channel.name),
                         style = MaterialTheme.typography.titleMedium,
                         color = if (isFocused) TextPrimary else OnSurface,
                         maxLines = 1,

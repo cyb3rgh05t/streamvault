@@ -920,7 +920,7 @@ fun EpgOverlay(
                     if (currentChannel != null) {
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            text = "$displayChannelNumber. ${currentChannel.name}",
+                            text = stringResource(R.string.channel_number_name_format, displayChannelNumber, currentChannel.name),
                             style = MaterialTheme.typography.headlineSmall,
                             color = Color.White,
                             fontWeight = FontWeight.Bold
@@ -961,7 +961,7 @@ fun EpgOverlay(
                         Spacer(Modifier.height(4.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text = "${timeFormat.format(Date(currentProgram.startTime))} - ${timeFormat.format(Date(currentProgram.endTime))}",
+                                text = stringResource(R.string.time_range_format, timeFormat.format(Date(currentProgram.startTime)), timeFormat.format(Date(currentProgram.endTime))),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = TextSecondary
                             )
@@ -1082,7 +1082,7 @@ fun EpgOverlay(
                                 Spacer(Modifier.height(2.dp))
                                 Row {
                                     Text(
-                                        text = "${timeFormat.format(Date(program.startTime))} - ${timeFormat.format(Date(program.endTime))}",
+                                        text = stringResource(R.string.time_range_format, timeFormat.format(Date(program.startTime)), timeFormat.format(Date(program.endTime))),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = TextSecondary
                                     )

@@ -525,7 +525,7 @@ fun HomeScreen(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = "${stringResource(R.string.live_shell_provider)}: ${uiState.provider?.name ?: stringResource(R.string.playlist_no_provider)}",
+                                        text = stringResource(R.string.label_colon_value_format, stringResource(R.string.live_shell_provider), uiState.provider?.name ?: stringResource(R.string.playlist_no_provider)),
                                         style = MaterialTheme.typography.labelMedium,
                                         color = OnSurfaceDim,
                                         maxLines = 1
@@ -540,10 +540,10 @@ fun HomeScreen(
                             } else {
                                 ContentMetadataStrip(
                                     values = buildList {
-                                        add("${stringResource(R.string.live_shell_provider)}: ${uiState.provider?.name ?: stringResource(R.string.playlist_no_provider)}")
+                                        add(stringResource(R.string.label_colon_value_format, stringResource(R.string.live_shell_provider), uiState.provider?.name ?: stringResource(R.string.playlist_no_provider)))
                                         add(stringResource(R.string.live_channel_results, uiState.filteredChannels.size))
                                         uiState.lastVisitedCategory?.name?.let {
-                                            add("${stringResource(R.string.live_shell_last_group)}: $it")
+                                            add(stringResource(R.string.label_colon_value_format, stringResource(R.string.live_shell_last_group), it))
                                         }
                                     }
                                 )
@@ -562,7 +562,7 @@ fun HomeScreen(
                                 )
                                 if (hasSplitChannels) {
                                     StatusPill(
-                                        label = "${stringResource(R.string.live_shell_split)} ${splitSlots.count { it != null }}/4"
+                                        label = stringResource(R.string.split_count_format, stringResource(R.string.live_shell_split), splitSlots.count { it != null })
                                     )
                                 }
                             }
@@ -579,6 +579,23 @@ fun HomeScreen(
                                         text = stringResource(R.string.home_loading_channels),
                                         color = Color.White.copy(alpha = 0.7f),
                                         style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                            }
+                        } else if (uiState.errorMessage != null) {
+                            val errorMsg = uiState.errorMessage
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                                ) {
+                                    Text(
+                                        text = errorMsg ?: "",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = OnBackground
                                     )
                                 }
                             }
@@ -961,7 +978,7 @@ private fun LivePreviewPane(
                             color = OnBackground
                         )
                         Text(
-                            text = "${formatProgramTime(program.startTime)} - ${formatProgramTime(program.endTime)}",
+                            text = stringResource(R.string.time_range_format, formatProgramTime(program.startTime), formatProgramTime(program.endTime)),
                             style = MaterialTheme.typography.bodySmall,
                             color = OnSurfaceDim
                         )
@@ -1213,7 +1230,7 @@ fun ReorderSidePanel(
                                 Text(stringResource(R.string.action_move), color = Color.White, modifier = Modifier.padding(end = 8.dp))
                             }
                             Text(
-                                "${index + 1}. ${channel.name}", 
+                                stringResource(R.string.channel_number_name_format, index + 1, channel.name), 
                                 modifier = Modifier.weight(1f), 
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = if (isDraggingThis) Color.White else if (isFocused) OnBackground else OnSurface,

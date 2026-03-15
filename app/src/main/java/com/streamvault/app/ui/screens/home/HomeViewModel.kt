@@ -287,6 +287,7 @@ class HomeViewModel @Inject constructor(
         val providerId = _uiState.value.provider?.id ?: return
         loadChannelsJob?.cancel()
         loadChannelsJob = viewModelScope.launch {
+            try {
             val queryFlow = _uiState.map { it.channelSearchQuery }
                 .debounce(150)
                 .distinctUntilChanged()
@@ -328,8 +329,16 @@ class HomeViewModel @Inject constructor(
                 val numberedChannels = channels.mapIndexed { index, channel ->
                     channel.copy(number = index + 1)
                 }
-                _uiState.update { it.copy(hasChannels = numberedChannels.isNotEmpty(), isLoading = false) }
+                _uiState.update { it.copy(hasChannels = numberedChannels.isNotEmpty(), isLoading = false, errorMessage = null) }
                 _localChannels.value = numberedChannels
+            }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = appContext.getString(R.string.home_error_load_failed)
+                    )
+                }
             }
         }
     }
@@ -477,7 +486,7 @@ class HomeViewModel @Inject constructor(
                 groupId = null
             )
             onDismissDialog()
-            _uiState.update { it.copy(userMessage = "Added ${channel.name} to Favorites") }
+            _uiState.update { it.copy(userMessage = appContext.getString(R.string.home_added_to_favorites, channel.name)) }
         }
     }
 
@@ -489,7 +498,7 @@ class HomeViewModel @Inject constructor(
                 groupId = null
             )
             onDismissDialog()
-            _uiState.update { it.copy(userMessage = "Removed ${channel.name} from Favorites") }
+            _uiState.update { it.copy(userMessage = appContext.getString(R.string.home_removed_from_favorites, channel.name)) }
         }
     }
 
@@ -895,7 +904,8 @@ data class HomeUiState(
     val previewChannelId: Long? = null,
     val previewPlayerEngine: PlayerEngine? = null,
     val isPreviewLoading: Boolean = false,
-    val previewErrorMessage: String? = null
+    val previewErrorMessage: String? = null,
+    val errorMessage: String? = null
 )
 
 private data class CategorySelectionContext(

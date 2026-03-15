@@ -1285,7 +1285,7 @@ private fun ProviderDiagnosticsPanel(
             color = OnSurfaceDim
         )
         Text(
-            text = "${diagnostics.sourceLabel} | ${diagnostics.connectionSummary}",
+            text = stringResource(R.string.diagnostics_summary_format, diagnostics.sourceLabel, diagnostics.connectionSummary),
             style = MaterialTheme.typography.bodySmall,
             color = OnSurface
         )

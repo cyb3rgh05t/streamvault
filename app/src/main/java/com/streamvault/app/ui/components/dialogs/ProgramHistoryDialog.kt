@@ -140,7 +140,7 @@ fun ProgramHistoryDialog(
                                             overflow = TextOverflow.Ellipsis
                                         )
                                         Text(
-                                            text = "${dayFormat.format(program.startTime)} | ${timeFormat.format(program.startTime)} - ${timeFormat.format(program.endTime)}",
+                                            text = stringResource(R.string.program_date_time_range, dayFormat.format(program.startTime), timeFormat.format(program.startTime), timeFormat.format(program.endTime)),
                                             style = MaterialTheme.typography.labelMedium,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant
                                         )

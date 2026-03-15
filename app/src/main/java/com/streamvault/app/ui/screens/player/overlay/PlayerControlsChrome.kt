@@ -571,7 +571,7 @@ private fun PlayerLiveInfo(
             )
             Text(
                 text = if (currentProgram != null) {
-                    "$displayChannelNumber. ${currentChannelName.orEmpty()}"
+                    stringResource(R.string.channel_number_name_format, displayChannelNumber, currentChannelName.orEmpty())
                 } else {
                     stringResource(R.string.player_no_guide_data)
                 },
@@ -614,7 +614,7 @@ private fun PlayerLiveInfo(
         }
     } else {
         Text(
-            text = currentChannelName?.let { "$displayChannelNumber. $it" }.orEmpty(),
+            text = currentChannelName?.let { stringResource(R.string.channel_number_name_format, displayChannelNumber, it) }.orEmpty(),
             style = MaterialTheme.typography.labelLarge,
             color = Color.White.copy(alpha = 0.82f)
         )
